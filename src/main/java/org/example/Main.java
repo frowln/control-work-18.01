@@ -1,6 +1,7 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -18,15 +19,31 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Чат-бот на JavaFX");
 
+        // Создаем заголовок
+        Label titleLabel = new Label("Добро пожаловать в Чат-бот!");
+        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-padding: 10px;");
+
+        // Текстовая область для сообщений
         chatArea = new TextArea();
         chatArea.setEditable(false);
-        inputField = new TextField();
+        chatArea.setWrapText(true);
+        chatArea.setStyle("-fx-control-inner-background: #f0f8ff; -fx-font-size: 14px;");
 
+        // Поле ввода команды
+        inputField = new TextField();
+        inputField.setPromptText("Введите команду...");
+        inputField.setStyle("-fx-font-size: 14px;");
         inputField.setOnAction(e -> handleCommand(inputField.getText()));
 
-        VBox layout = new VBox(10, chatArea, inputField);
-        layout.setPrefSize(400, 300);
+        // Основной макет с отступами
+        VBox layout = new VBox(10, titleLabel, chatArea, inputField);
+        layout.setPadding(new Insets(15));
+        layout.setStyle("-fx-background-color: #e6f7ff; -fx-border-color: #b3d9ff; -fx-border-width: 2px; -fx-border-radius: 10px;");
 
+        // Устанавливаем минимальные размеры окна
+        layout.setPrefSize(450, 350);
+
+        // Сцена
         Scene scene = new Scene(layout);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -64,5 +81,4 @@ public class Main extends Application {
             return "Неизвестная команда. Введите 'list' для списка команд.";
         }
     }
-
 }
